@@ -1,7 +1,7 @@
 [
   {
     "surf": "panel_script::time",
-    "anchor": "0.5,0.4",
+    "anchor": "0.5, 0.4",
     "args": {
       "size": 360
     }
@@ -49,5 +49,14 @@
         "anchor": ".5 .5"
       }
     ]
+  },
+  {
+    "surf": "panel_script::weather",
+    "args": {
+      "fmt": "Weather updated {current_conditions.last_updated}",
+      "size": 30
+    },
+    "anchor": ".5 1",
+    "position": "0 -20"
   }
 ]

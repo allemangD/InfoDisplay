@@ -27,11 +27,11 @@ class Font(object):
 roboto = Font('res/RobotoSlab-Regular.ttf')
 
 
-def __do_eval(text):
+def __do_eval(t):
     try:
-        return eval(text)
+        return eval(t)
     except:
-        return text
+        return t
 
 
 def text(size=60, t="", do_eval=False):
@@ -40,7 +40,7 @@ def text(size=60, t="", do_eval=False):
     return roboto[size].render(t, True, WHITE)
 
 
-def time(size=60, fmt='%I:%H', strip='0'):
+def time(size=60, fmt='%I:%M', strip='0'):
     return roboto[size].render(format(datetime.now(), fmt).lstrip(strip), True, WHITE)
 
 
