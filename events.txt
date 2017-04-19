@@ -1,0 +1,8 @@
+# datetime | event name
+# space before and after | omitted
+
+Solar Eclipse   | 8/21/2017 2:46:22PM
+Untrump         | 1/20/2021 9:00AM
+Move-out        | 5/12/2017 noon
+
+# Dinner Tomorrow | Tomorrow 6:30pm

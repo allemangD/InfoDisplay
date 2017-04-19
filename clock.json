@@ -1,0 +1,39 @@
+[
+  {
+    "surf": "panel_script::time",
+    "anchor": "0.5,0.5"
+  },
+  {
+    "surf": "500 500",
+    "anchor": "0.5,0.5",
+    "position": "0 250",
+    "children": [
+      {
+        "surf": "panel_script::date",
+        "position": "0 -60",
+        "anchor": ".5 .5"
+      },
+      {
+        "surf": "panel_script::icon",
+        "position": "0 80",
+        "anchor": ".5 .5",
+        "pivot": "1 .5"
+      },
+      {
+        "surf": "panel_script::temperature",
+        "position": "0 80",
+        "anchor": ".5 .5",
+        "pivot": "0 .5"
+      }
+    ]
+  },
+  {
+    "surf": "1280 100",
+    "children": [
+      {
+        "surf": "panel_script::header",
+        "anchor": ".5 .5"
+      }
+    ]
+  }
+]
