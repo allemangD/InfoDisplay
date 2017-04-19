@@ -139,13 +139,3 @@ ENV/
 # Rope project settings
 .ropeproject
 .idea/
-bells.py
-clock.json
-countdown.py
-events.txt
-panel.py
-panel_script.py
-requirements.txt
-res/
-weatherclock.py
-wxget.py
