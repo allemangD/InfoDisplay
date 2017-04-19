@@ -1,26 +1,40 @@
 [
   {
     "surf": "panel_script::time",
-    "anchor": "0.5,0.5"
+    "anchor": "0.5,0.4",
+    "args": {
+      "size": 360
+    }
   },
   {
-    "surf": "500 500",
-    "anchor": "0.5,0.5",
+    "surf": "1280 500",
+    "anchor": "0.5,0.4",
     "position": "0 250",
     "children": [
       {
-        "surf": "panel_script::date",
+        "surf": "panel_script::time",
+        "args": {
+          "fmt": "%A, %B %d",
+          "size": 60
+        },
         "position": "0 -60",
         "anchor": ".5 .5"
       },
       {
-        "surf": "panel_script::icon",
+        "surf": "panel_script::image",
+        "args": {
+          "path": "'res/png/'+str(get_weather().current_conditions.icon)+'.png'",
+          "do_eval": true
+        },
         "position": "0 80",
         "anchor": ".5 .5",
         "pivot": "1 .5"
       },
       {
-        "surf": "panel_script::temperature",
+        "surf": "panel_script::weather",
+        "args": {
+          "fmt": "{current_conditions.temperature}\u00b0{units.temperature}"
+        },
         "position": "0 80",
         "anchor": ".5 .5",
         "pivot": "0 .5"

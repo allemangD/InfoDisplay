@@ -6,7 +6,7 @@ import pygame
 
 
 class Panel(object):
-    def __init__(self, surf, position=None, anchor=None, pivot=None, children=None):
+    def __init__(self, surf, position=None, anchor=None, pivot=None, children=None, args=None):
         if isinstance(surf, tuple) or not surf:
             self.__surf = pygame.Surface(surf or (0, 0), flags=pygame.SRCALPHA)
         else:
@@ -16,13 +16,14 @@ class Panel(object):
         self.anchor = anchor or (0, 0)
         self.pivot = pivot or self.anchor
         self.children = children or []
+        self.args = args or {}
 
     @property
     def size(self):
         surf = self.__surf
 
         if callable(surf):
-            surf = surf()
+            surf = surf(**self.args)
         if isinstance(surf, Panel):
             return surf.size
 
@@ -33,7 +34,7 @@ class Panel(object):
         surf = self.__surf
 
         if callable(surf):
-            surf = surf()
+            surf = surf(**self.args)
         elif isinstance(surf, Panel):
             surf = surf.surf
         else:
@@ -48,11 +49,6 @@ class Panel(object):
 
                 position = tuple(int(a * s - v * c + p) for a, v, s, c, p in
                                  zip(child.anchor, child.pivot, self.size, child.size, child.position))
-
-            if callable(c_surf):
-                c_surf = c_surf()
-            if isinstance(c_surf, Panel):
-                c_surf=c_surf.surf
 
             surf.blit(c_surf, position)
 
@@ -114,6 +110,7 @@ def load(file):
         anchor = d.get('anchor', None)
         pivot = d.get('pivot', None)
         children = d.get('children', [])
+        args = d.get('args', {})
 
         surf = ordered_pair(surf, int) or script(surf)
         position = ordered_pair(position, int)
@@ -121,7 +118,7 @@ def load(file):
         pivot = ordered_pair(pivot)
         children = [from_dict(d) for d in children]
 
-        return Panel(surf, position, anchor, pivot, children)
+        return Panel(surf, position, anchor, pivot, children, args)
 
     with open(file) as f:
         j = json.load(f)

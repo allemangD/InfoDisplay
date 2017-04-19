@@ -12,39 +12,56 @@ WHITE = (255, 255, 255)
 GRAY = (175, 175, 175)
 BLACK = (0, 0, 0)
 
-font = {
-    'RobotoSlab': {
-        30: pygame.font.Font("res/RobotoSlab-Regular.ttf", 30),
-        45: pygame.font.Font("res/RobotoSlab-Regular.ttf", 45),
-        60: pygame.font.Font("res/RobotoSlab-Regular.ttf", 60),
-        90: pygame.font.Font("res/RobotoSlab-Regular.ttf", 90),
-        360: pygame.font.Font("res/RobotoSlab-Regular.ttf", 360),
-    }
-}
+
+class Font(object):
+    def __init__(self, name):
+        self.file = name
+        self.fonts = {}
+
+    def __getitem__(self, size):
+        if size not in self.fonts:
+            self.fonts[size] = pygame.font.Font(self.file, size)
+        return self.fonts[size]
 
 
-def time():
-    return font['RobotoSlab'][360].render(format(datetime.now(), '%I:%H').lstrip('0'), True, WHITE)
+roboto = Font('res/RobotoSlab-Regular.ttf')
 
 
-def date():
-    return font['RobotoSlab'][60].render(format(datetime.now(), '%A, %B %d'), True, GRAY)
+def __do_eval(text):
+    try:
+        return eval(text)
+    except:
+        return text
 
 
-def temperature():
-    f = font['RobotoSlab'][90]
-    return f.render('{0[current_conditions][temperature]}\u00b0'.format(get_weather()), True, WHITE)
+def text(size=60, t="", do_eval=False):
+    if do_eval:
+        t = __do_eval(t)
+    return roboto[size].render(t, True, WHITE)
 
 
-def icon():
-    return pygame.image.load('res/png/12.png')
+def time(size=60, fmt='%I:%H', strip='0'):
+    return roboto[size].render(format(datetime.now(), fmt).lstrip(strip), True, WHITE)
+
+
+def weather(size=60, fmt='{current_conditions.temperature}\u00b0'):
+    return roboto[size].render(fmt.format(**get_weather()), True, WHITE)
+
+
+def image(path="", do_eval=False):
+    if do_eval:
+        path = __do_eval(path)
+    try:
+        return pygame.image.load(path)
+    except:
+        return text(size=15, t=path)
 
 
 def header():
     es = get_events()
 
     def item(i):
-        f = font['RobotoSlab'][30]
+        f = roboto[30]
         e = es[i]
         l = e.label
         t = '{days}d {hours}h {minutes}m'.format(**e.time)
