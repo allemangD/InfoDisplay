@@ -34,9 +34,9 @@ __event_load = 0
 def update_events(force=False):
     global __events, __event_load
 
-    event_time = os.stat('events.txt').st_mtime_ns
+    event_time = os.stat('markup/events.txt').st_mtime_ns
     if force or __event_load != event_time:
-        with open('events.txt') as f:
+        with open('markup/events.txt') as f:
             etext = [tuple(i.strip() for i in l.split('|')) for l in f.readlines() if
                      l.strip() and not l.startswith('#')]
             __events = [Event(date, lbl) for lbl, date in etext]

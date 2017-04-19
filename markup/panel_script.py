@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pygame
 
-from countdown import get_events
+from markup.countdown import get_events
 from panel import Panel
 from wxget import get_weather
 

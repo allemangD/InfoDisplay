@@ -1,5 +1,6 @@
 import importlib
 import json
+import os
 import re
 
 import pygame
@@ -61,6 +62,9 @@ old_modules = {}
 def load(file):
     loaded_modules = {}
 
+    fp = file
+    directory, file = os.path.split(file)
+
     def ordered_pair(s, dtype=float):
         if not s:
             return None
@@ -86,12 +90,14 @@ def load(file):
 
         mod, func = pair
 
+        mname = directory.replace('/', '.') + '.' + mod
+
         if mod not in loaded_modules:
             if mod in old_modules:
                 importlib.reload(old_modules[mod])
 
             try:
-                loaded_modules[mod] = importlib.import_module(mod)
+                loaded_modules[mod] = importlib.import_module(mname)
             except ModuleNotFoundError:
                 return None
 
@@ -120,7 +126,7 @@ def load(file):
 
         return Panel(surf, position, anchor, pivot, children, args)
 
-    with open(file) as f:
+    with open(fp) as f:
         j = json.load(f)
         if isinstance(j, list):
             ls = [from_dict(d) for d in j]
